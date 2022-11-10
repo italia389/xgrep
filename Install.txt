@@ -1,0 +1,43 @@
+Instructions for Installing the Xgrep Utility
+
+Installer packages for the xgrep utility are included for the macOS platform and
+Linux platforms (CentOS, Debian, GNU/Linux, Red Hat, Ubuntu, and others).  The
+standard installation packages place files in /usr/local and require superuser
+(root) privileges.  (Man pages and the 'xgrep' binary are installed.)  If you
+are not installing on a macOS or GNU/Linux platform, want to install in your
+HOME directory, or want to customize the installation process, please refer to
+file CustomInstall.txt for instructions.
+
+For a standard installation of xgrep, perform the following steps:
+
+ 1. Move to the directory that contains this Install.txt file:
+
+	$ cd xgrep-master
+
+ 2. If you are installing on a Linux platform, go to the next step; otherwise,
+    go to step 5.
+
+ 3. The Linux installer is xgrep-1.0.0.sh, which includes a 64-bit binary built
+    on a CentOS vers. 6 machine.  To run the installer, type the following
+    commands:
+
+	$ su root
+	# ./xgrep-1.0.0.sh
+	# exit
+
+ 4. Go to step 6.
+
+ 5. The macOS installer is xgrep-1.0.0.pkg, which includes a 64-bit binary built
+    for macOS vers. 10.12 (Sierra) and later.  Open the installer package with
+    the following command:
+
+	$ open xgrep-1.0.0.pkg
+
+    and run the installer.  You will be prompted to enter your password so that
+    administrator privileges can be enabled.
+
+ 6. The installers place the xgrep binary in /usr/local/bin.  Be sure to include
+    this directory in your shell PATH.
+
+See xgrep(1) for a description of the xgrep utility and its switches, and
+xre_format(7) for a description of the regular expression syntax.

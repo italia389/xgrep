@@ -1,0 +1,131 @@
+.\" (c) Copyright 2022 Richard W. Marinelli    Ver. 1.0.0
+.\"
+.\" This work is licensed under the GNU General Public License (GPLv3).  To view a copy of this license, see the
+.\" "License.txt" file included with this distribution or visit http://www.gnu.org/licenses/gpl-3.0.en.html.
+.\"
+.ad l
+.TH XGREP 1 2022-11-08 "Ver. 1.0" "Xgrep Documentation"
+.nh \" Turn off hyphenation.
+.SH "NAME"
+\fBxgrep\fR \- regular expression search utility.
+.SH SYNOPSIS
+\fBxgrep\fR
+.in +.7i
+.sp -1v
+{\fB\-?\fR, \fB\-usage\fR | \fB\-C\fR, \fB\-copyright\fR | \fB\-help\fR | \fB\-V\fR, \fB\-version\fR}
+.in
+.sp +0v
+\fBxgrep\fR
+.in +.7i
+.sp -1v
+[\fB\-0\fR] [\fB\-c\fR, \fB\-count\fR] [\fB\-E\fR, \fB\-no\-enhanced\fR] [\fB\-e\fR \fIp\fR] [\fB\-H\fR, \fB\-force-hdr\fR] \c
+[\fB\-h\fR, \fB\-no-hdr\fR] [\fB\-i\fR, \fB\-ignore-case\fR] [\fB\-L\fR, \fB\-lit\fR] [\fB\-l\fR, \fB\-only-filename\fR] \c
+[\fB\-m\fR, \fB\-max-matches\fR \fIn\fR] [\fB\-n\fR, \fB\-line-num\fR] [\fB\-o\fR, \fB\-only-matching\fR] \c
+[\fB\-p\fR, \fB\-pat\fR \fIp\fR] [\fB\-q\fR, \fB\-quiet\fR] [\fB\-s\fR, \fB\-skip\fR] [\fB\-v\fR, \fB\-invert-match\fR] \c
+[\fIpat\fR] [\fIfile\fR ...]
+.SH DESCRIPTION
+\fBxgrep\fR is a fast file\-searching utility that uses the regular expression engine from the XRE Library for
+regular expression pattern matching and the Boyer-Moore engine from the CXL Library for plain text pattern
+matching.  It selects lines in text files that match one or more patterns (or do not match any of the
+patterns) and writes them to standard output.  Multiple patterns and files may be specified.  A line in a file
+is considered a match if at least one pattern matches the line without its newline terminator.
+.PP
+The search engine to use for a particular pattern is determined automatically.  If the \-lit switch is specified
+or a pattern is entirely literal text, the Boyer-Moore engine is used; otherwise, the XRE engine is used.  (See xre_format(7)
+for a description of the regular expression syntax.)
+.PP
+Note that capturing groups may be specified in a regular expression pattern and used for back-reference matching, but
+they will have no effect on the output format.
+.SH SWITCHES
+.IP "\fB\-0\fR" 4
+Read list of filenames to search from standard input, separated by null characters, instead of from the
+command line.  Switch is expected to be used in concert with the \-print0 switch of find(1).
+.IP "\fB\-?\fR, \fB\-usage\fR" 4
+Display usage and exit.
+.IP "\fB\-C\fR, \fB\-copyright\fR" 4
+Display copyright information and exit.
+.IP "\fB\-c\fR, \fB\-count\fR" 4
+Display count of selected lines only.
+.IP "\fB\-E\fR, \fB\-no-enhanced\fR" 4
+Disable enhanced features in search patterns, otherwise, enable.
+.IP "\fB\-e\fR \fIp\fR" 4
+Alias for \-pat switch.  Switch may be repeated.
+.IP "\fB\-H\fR, \fB\-force-hdr\fR" 4
+Always print filename header with output lines.
+.IP "\fB\-h\fR, \fB\-no-hdr\fR" 4
+Suppress printing of filename header with output lines.
+.IP "\fB\-help\fR" 4
+Display detailed help and exit.
+.IP "\fB\-i\fR, \fB\-ignore-case\fR" 4
+Perform case-insensitive matching, otherwise, case-sensitive.
+.IP "\fB\-L\fR, \fB\-lit\fR" 4
+Interpret patterns as literal text instead of regular expressions.
+.IP "\fB\-l\fR, \fB\-only-filename\fR" 4
+Display names of files containing selected lines only.
+.IP "\fB\-m\fR, \fB\-max-matches\fR \fIn\fR" 4
+Stop scanning each file after \fIn\fR matches are found.
+.IP "\fB\-n\fR, \fB\-line-num\fR" 4
+Precede each selected line by its line number.
+.IP "\fB\-o\fR, \fB\-only-matching\fR" 4
+Display only the matching portion of the lines.
+.IP "\fB\-p\fR, \fB\-pat\fR \fIp\fR" 4
+Use pattern \fIp\fR for searching.  Switch may be repeated.
+.IP "\fB\-q\fR, \fB\-quiet\fR" 4
+Quiet mode: suppress normal output.  Scanning stops when first match is found.
+.IP "\fB\-s\fR, \fB\-skip\fR" 4
+Skip files that cannot be opened (ignore errors).
+.IP "\fB\-V\fR, \fB\-version\fR" 4
+Display program version and exit.
+.IP "\fB\-v\fR, \fB\-invert-match\fR" 4
+Select lines not matching any of the patterns.
+.SH ARGUMENTS
+The following optional arguments may be specified:
+.IP \fIpat\fR 8
+Pattern to use for searching.
+.IP \fIfile\fR 8
+Zero or more input files.  If no files are specified, data is read from standard input.  Alternatively,
+if any file is specified as "\-", standard input is read for that file.
+.SH NOTES
+Either a \fB\-pat\fR switch or \fIpat\fR argument must be specified.  If the former, the \fIpat\fR
+argument must be omitted.
+.PP
+The \fB\-line\-num\fR and \fB\-only\-matching\fR switches are ignored if the \fB\-count\fR, \fB\-only\-filename\fR,
+or \fB\-quiet\fR switch is specified.
+.SH EXAMPLES
+To find all occurrences of the word "verbose" in a file:
+.sp
+.nf
+.RS 4
+$ xgrep 'verbose' myfile
+.RE
+.fi
+.PP
+To find all lines in two files which do not contain the words "foo" or "bar":
+.sp
+.nf
+.RS 4
+$ xgrep -v -p 'foo' -p 'bar' myfile1 myfile2
+.sp
+.RE
+.fi
+.PP
+To list all C source files in a project containing function "myfunc":
+.sp
+.nf
+.RS 4
+$ find myproj -name '*.c' -print0 | xgrep -0 -l -L 'myfunc('
+.RE
+.fi
+.SH EXIT STATUS
+The \fBxgrep\fR utility exits with one of the following values:
+.IP "0" 6
+One or more lines were selected.
+.IP "1" 6
+No lines were selected.
+.IP "2" 6
+An error occurred.
+.SH SEE ALSO
+find(1), sed(1), xre_format(7)
+.SH AUTHOR
+\fBxgrep\fR was written and is currently maintained by Richard W. Marinelli <italian389@yahoo.com>.  See
+the -version and -copyright switches for version and copyright information.

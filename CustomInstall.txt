@@ -1,0 +1,62 @@
+Advanced Installation Instructions for the Xgrep Utility
+
+This distribution includes standard installer packages for the macOS platform
+and Linux platforms (CentOS, Debian, GNU/Linux, Red Hat, Ubuntu, and others).
+If you are installing on one of these platforms, have superuser (root)
+privileges, do not want to install the xgrep utility in your HOME directory, and
+do not want to customize the installation process, please refer to file
+Install.txt for instructions on using the standard installers.
+
+Make files for macOS and Linux platforms are included in this distribution.
+Compilation on other Unix platforms should be possible as well, however it has
+not been tested, so there may be errors.  If this occurs, please contact the
+author with the details so that the problem can be resolved.  (See the ReadMe.md
+file for contact information.)  Note that if you are installing on a macOS
+system, Xcode must already be installed (vers. 7.2.1 or later recommended) so
+that command-line tools are available.
+
+To build and install the xgrep utility, perform the following steps:
+
+ 1. Move to the directory that contains this CustomInstall.txt file:
+
+	$ cd xgrep-master
+
+ 2. Remove any existing package binaries:
+
+	$ make clean
+
+ 3. Build the xgrep utility.  This will create file "xgrep" in the current
+    directory.  Note that during compilation you may see warnings about
+    uninitialized variables, signed/unsigned comparisons, or other messages with
+    some compilers.  These may be ignored:
+
+	$ make
+
+ 4. Install xgrep.  If you have superuser privileges and want to do a site-wide
+    install, go to the next step; otherwise, go to step 7.
+
+ 5. Perform a site-wide install:
+
+	$ su root
+	# make install
+	# exit
+
+ 6. Go to step 9.
+
+ 7. Perform a local (user) install.  Supply the pathname of the local
+    installation directory with the INSTALL variable; for example,
+    "$HOME/xgrep":
+
+	$ make install INSTALL=$HOME/xgrep
+
+ 8. Modify your shell startup file in your HOME directory so that the shell can
+    find the xgrep binary.  For example, add the following line to file
+    ~/.profile if you are using the Bourne shell (bash) or to file ~/.zshenv if
+    you are using zsh:
+
+	export PATH="$PATH:$HOME/xgrep/bin"
+
+ 9. Installation completed.
+
+See xgrep(1) for a description of the xgrep utility and its switches, and
+xre_format(7) for a description of the regular expression syntax.

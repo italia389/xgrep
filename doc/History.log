@@ -1,0 +1,10 @@
+xgrep RELEASE HISTORY
+
+----------
+1.0.0	8 Nov 2022
+
+ 1. Original version.  Utility uses the CXL library and XRE regular expression
+    engine in enhanced mode, and accepts all the standard grep switches,
+    including a -0 switch that provides the option of searching files selected
+    by find(1) and written with the -print0 switch.  It also performs a fast
+    Boyer-Moore search automatically for any pattern that is plain text.
